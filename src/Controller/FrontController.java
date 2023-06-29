@@ -26,11 +26,13 @@ public class FrontController {
 
 //	request에 맞는 Controller를 추출, 해당 컨트롤러 실행
 //	request, serviceno(1 select, 2 insert, 3 update, 4 delete, param
-	public void execute(String request, int ServiceNo, Map<String,Object> param) {
+	public Map<String, Object> execute(String request, int ServiceNo, Map<String,Object> param) {
 		Object controller = map.get(request);
+		Map<String, Object> result = new HashMap();
 		if (controller instanceof BookController) {
 			
 			BookController down = (BookController)controller;
+			result = down.execute(ServiceNo, param);
 			down.execute(ServiceNo, param);
 			System.out.println("BOOKCONTROLLER !");
 			
@@ -50,5 +52,6 @@ public class FrontController {
 		} else {
 			System.out.println("Request ERROR !");
 		}
+		return result;
 	}
 }
